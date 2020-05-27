@@ -9,7 +9,7 @@ type AnimalStore struct {
 	db *sql.DB
 }
 
-func NewAnimalStore(db *sql.DB) AnimalStore {
+func New(db *sql.DB) AnimalStore {
 	return AnimalStore{db: db}
 }
 
@@ -36,14 +36,13 @@ func (a AnimalStore) Get(id int) ([]entities.Animal, error) {
 	for rows.Next() {
 		var a entities.Animal
 		_ = rows.Scan(&a.ID, &a.Name, &a.Age)
+		animals = append(animals, a)
 	}
 	return animals, nil
 }
 
 func (a AnimalStore) Create(animal entities.Animal) (entities.Animal, error) {
-	res, err := a.db.Exec("INSERT INTO animals (name, age) "+
-		"VALUES(?,?)", animal.Name, animal.Age)
-
+	res, err := a.db.Exec("INSERT INTO animals (name, age) VALUES(?,?)", animal.Name, animal.Age)
 	if err != nil {
 		return entities.Animal{}, nil
 	}

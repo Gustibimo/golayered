@@ -21,8 +21,10 @@ type MySQLConfig struct {
 
 // ConnectToMySQL method takes mysql defined config and connect to mysql
 func ConnectToMysql(conf MySQLConfig) (*sql.DB, error) {
-	connection := fmt.Sprintf("%v:%v@tcp(%v%:v)/%v", conf.User, conf.Password,
+	connection := fmt.Sprintf("%v:%v@tcp(%v:%v)/%v", conf.User, conf.Password,
 		conf.Db, conf.Host, conf.Port)
+
+	fmt.Println(connection)
 
 	db, err := sql.Open("mysql", connection)
 	if err != nil {
