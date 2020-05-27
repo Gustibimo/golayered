@@ -7,6 +7,6 @@ this layer will communicate with datastore layer with interface
 // animal entities accessible in other package because its uppercased!
 type Animal struct {
 	ID   int
-	Name int
+	Name string
 	Age  int
 }
